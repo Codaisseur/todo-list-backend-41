@@ -23,3 +23,11 @@ camelCase => JS style
 # Seeders
 
 - Files to insert test data to our app/db.
+
+## queries
+
+Most used methods:
+// findAll -> returns and [] with as many instances as it matches
+// findOne => same as findAll but returns only one result.
+// findByPk => find by ID, returns {} || null.
+// findAndCountAll => for pagination.
