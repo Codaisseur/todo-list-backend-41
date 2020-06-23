@@ -38,12 +38,16 @@ const getAllImportantItems = async () => {
 
 const findUserById = async id => {
   try {
-    const user = await User.findByPk(id); // {user} || null
-    console.log(user.get({ plain: true }));
+    const user = await User.findByPk(id, {
+      include: [{ model: TodoList, include: [TodoItem] }],
+    }); // {user} || null
+    const plainUser = user.get({ plain: true });
+    console.log(plainUser.todoLists[0].todoItems);
   } catch (e) {
     console.log("error", e);
   }
 };
+findUserById(2);
 
 const createUser = async ({ email, password, name }) => {
   try {
@@ -63,4 +67,3 @@ const deleteUser = async id => {
     console.log("error", e);
   }
 };
-deleteUser(3);
