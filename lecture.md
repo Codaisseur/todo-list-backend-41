@@ -31,3 +31,11 @@ Most used methods:
 // findOne => same as findAll but returns only one result.
 // findByPk => find by ID, returns {} || null.
 // findAndCountAll => for pagination.
+
+## N:N relationships (many to many)
+
+1. Create join-table model with foreign keys for both entities to be joined
+2. Alter join-table migration to specify foreign key references.
+3. set up association between join-table and entities
+4. set up association between entities themselves.
+5. Seed and try out!
