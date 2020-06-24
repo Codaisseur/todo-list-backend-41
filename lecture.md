@@ -86,3 +86,9 @@ Endpoints are defined as the _combination_ of url + HTTP Method
 
 app.get(`/users`) => GET + '/users'
 app.post(`/users`) => POST + '/users'
+
+# Middleware
+
+- Request can go through multiple "stages"
+- "enter the shop" -> "grab a shopping cart" -> "items in basket" -> "checkout" -> "leave"
+- "validate" (does request contain what we expect?) -> "handle request" (query database) -> "log" (what happened)

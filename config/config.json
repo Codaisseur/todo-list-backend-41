@@ -1,6 +1,6 @@
 {
   "development": {
-    "url": "postgres://smqlsiry:znLq5q88FE0u-KXg0pCFOV1rFJ-78ckB@balarama.db.elephantsql.com:5432/smqlsiry",
+    "url": "postgres://bukbeehf:g8WiBG9P6QiuXuCDlz7C0WxTE9DQSwmS@kandula.db.elephantsql.com:5432/bukbeehf",
     "operatorsAliases": "0"
   },
   "test": {

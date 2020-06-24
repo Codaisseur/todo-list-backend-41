@@ -1,4 +1,5 @@
 const express = require("express");
+const { response } = require("express");
 const User = require("./models").user;
 const PORT = 4000;
 const app = express();
@@ -34,14 +35,22 @@ app.post("/users", async (req, res, next) => {
   }
 });
 
-app.get("/users/:id", async (req, res, next) => {
+app.get("/users/:userId", async (req, res, next) => {
+  const id = parseInt(req.params.id);
+  console.log("WHAT IS THIS?", id);
+
+  if (isNaN(id)) {
+    // returning to stop the request
+    return res.status(400).send({ message: "id is not a number, sorry" });
+  }
+
   try {
-    const id = req.params.id;
     const user = await User.findByPk(id);
     if (!user) {
       res.status(404).send("User not found");
     } else {
       res.send(user);
+      console.log(`User requested at ${new Date()}`);
     }
   } catch (e) {
     next(e);
@@ -49,8 +58,13 @@ app.get("/users/:id", async (req, res, next) => {
 });
 
 app.delete("/users/:id", async (req, res, next) => {
+  const id = parseInt(req.params.id);
+
+  if (isNaN(id)) {
+    return res.status(400).send({ message: "Id is not a not number" });
+  }
+
   try {
-    const { id } = req.params;
     const user = await User.findByPk(id);
     if (!user) {
       res.status(404).send("user not found");
