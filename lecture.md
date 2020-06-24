@@ -92,3 +92,33 @@ app.post(`/users`) => POST + '/users'
 - Request can go through multiple "stages"
 - "enter the shop" -> "grab a shopping cart" -> "items in basket" -> "checkout" -> "leave"
 - "validate" (does request contain what we expect?) -> "handle request" (query database) -> "log" (what happened)
+- Middleware in express are functions you can use to share behaviour between so routes
+- That way we don't repeat ourselves
+
+Middleware example
+
+```javascript
+function validateId(req, res, next) {
+  const id = parseInt(req.params.id);
+  console.log("WHAT IS THIS?", req.params);
+
+  if (isNaN(id)) {
+    // returning to stop the request
+    return res.status(400).send({ message: "id is not a number, sorry" });
+  }
+
+  next();
+}
+```
+
+Use like so:
+
+```javascript
+app.get("/users/:id", validateId, async (req, res, next) => {
+   // handle request here
+}
+```
+
+# The order of middleware matters!
+
+So use middlewares like `express.json()` before you load the rest of you routes

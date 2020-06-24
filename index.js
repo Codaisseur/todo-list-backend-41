@@ -3,9 +3,25 @@ const { response } = require("express");
 const User = require("./models").user;
 const PORT = 4000;
 const app = express();
+const morgan = require("morgan");
 
 // Body parser middleware (helps us parse the body of the requests on POST, UPDATE requests)
 app.use(express.json());
+app.use(morgan("dev"));
+
+function chaosMonkeyMiddleWare(req, res, next) {
+  const randomNumber = Math.random();
+  if (randomNumber > 0.5) {
+    res
+      .status(500)
+      .send({ message: "You have been visited by the chaosmonkey" });
+  }
+
+  next();
+}
+
+// use a middleware for all routes with: app.use()
+app.use(chaosMonkeyMiddleWare);
 
 app.get(`/hello`, (request, response, next) => {
   response.send("hi from the server! hey");
@@ -35,29 +51,36 @@ app.post("/users", async (req, res, next) => {
   }
 });
 
-app.get("/users/:userId", async (req, res, next) => {
+function validateId(req, res, next) {
   const id = parseInt(req.params.id);
-  console.log("WHAT IS THIS?", id);
+  console.log("WHAT IS THIS?", req.params);
 
   if (isNaN(id)) {
     // returning to stop the request
     return res.status(400).send({ message: "id is not a number, sorry" });
   }
 
+  next();
+}
+
+app.get("/users/:id", validateId, async (req, res, next) => {
+  const id = parseInt(req.params.id);
+
   try {
     const user = await User.findByPk(id);
     if (!user) {
       res.status(404).send("User not found");
     } else {
-      res.send(user);
       console.log(`User requested at ${new Date()}`);
+      res.send(user); // this is the end
+      // next()
     }
   } catch (e) {
     next(e);
   }
 });
 
-app.delete("/users/:id", async (req, res, next) => {
+app.delete("/users/:id", validateId, async (req, res, next) => {
   const id = parseInt(req.params.id);
 
   if (isNaN(id)) {
