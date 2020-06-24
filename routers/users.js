@@ -30,7 +30,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.get("//:id", validateId, async (req, res, next) => {
+router.get("/:id", validateId, async (req, res, next) => {
   const id = parseInt(req.params.id);
 
   try {
@@ -47,7 +47,7 @@ router.get("//:id", validateId, async (req, res, next) => {
   }
 });
 
-router.delete("//:id", validateId, async (req, res, next) => {
+router.delete("/:id", validateId, async (req, res, next) => {
   const id = parseInt(req.params.id);
 
   if (isNaN(id)) {
