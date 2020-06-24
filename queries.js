@@ -71,8 +71,10 @@ const deleteUser = async id => {
 
 const getItemWithTags = async id => {
   try {
-    const item = await TodoItem.findByPk(id, { include: [Tag] });
-    console.log(item.get({ plain: true }));
+    const item = await TodoItem.findAll({ include: [Tag] });
+    const plainItems = item.map(i => i.get({ plain: true }));
+    console.log(plainItems[0]);
+    // console.log(item.get({ plain: true }));
   } catch (e) {
     console.log(e);
   }

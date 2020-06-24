@@ -39,3 +39,50 @@ Most used methods:
 3. set up association between join-table and entities
 4. set up association between entities themselves.
 5. Seed and try out!
+
+# REST (REpresentational State Transfer)
+
+REST => has many principles about what make an API RESTful
+
+RESTful API => follows the REST principles.
+
+3 main principles:
+
+- Operations as HTTP methods
+- Responses with correct status codes
+- clean and meaningful URLs
+
+1. Operations as HTTP methods.
+   => GET, POST, DELETE, PUT, PATCH
+   => CRUD => Create, READ, Update, Delete
+
+Create: POST,
+READ: GET,
+DELETE: Delete,
+Update: PATCH, PUT => PUT (replaces the entire object with the new)
+PATCH (only updated recived fields)
+
+2. Respond with appropiate status codes:
+
+   200... => success => everything is ok!
+   300... => Redirection => no longer here
+   400... => user errors => you screwed up!
+   500... => server errors => I screwed up!
+
+200 => success!
+404 => not found
+401 => unauthorized
+500 => internal server error.
+
+3. Clean and meaningful URLS:
+
+- `/users` => GET || POST
+- `/users/:id`
+
+- `/sendEmail` => RPM endpoints => Remote Procedure Call
+
+REMEMBER:
+Endpoints are defined as the _combination_ of url + HTTP Method
+
+app.get(`/users`) => GET + '/users'
+app.post(`/users`) => POST + '/users'
