@@ -1,6 +1,7 @@
 const User = require("./models").user;
 const TodoList = require("./models").todoList;
 const TodoItem = require("./models").todoItem;
+const Tag = require("./models").tag;
 
 // findAll -> returns and [] with as many instances as it matches
 // findOne => same as findAll but returns only one result.
@@ -47,7 +48,7 @@ const findUserById = async id => {
     console.log("error", e);
   }
 };
-findUserById(2);
+// findUserById(2);
 
 const createUser = async ({ email, password, name }) => {
   try {
@@ -67,3 +68,16 @@ const deleteUser = async id => {
     console.log("error", e);
   }
 };
+
+const getItemWithTags = async id => {
+  try {
+    const item = await TodoItem.findAll({ include: [Tag] });
+    const plainItems = item.map(i => i.get({ plain: true }));
+    console.log(plainItems[0]);
+    // console.log(item.get({ plain: true }));
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+getItemWithTags(1);
